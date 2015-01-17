@@ -123,6 +123,32 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.1.1</version>
+        <configuration>
+          <imageName>enschede/app2</imageName>
+          <baseImage>dockerbase/java7</baseImage>
+          <entryPoint>["java", "-jar", "/${project.build.finalName}.jar", "-Dspring.profiles.active=tst"]</entryPoint>
+          <!-- copy the service's jar file from target into the root directory of the image -->
+          <resources>
+            <resource>
+              <targetPath>/</targetPath>
+              <directory>${project.build.directory}</directory>
+              <include>${project.build.finalName}.jar</include>
+            </resource>
+          </resources>
+          <exposes>
+            <expose>8080</expose>
+          </exposes>
+          <env>
+            <spring.profiles.active>docker</spring.profiles.active>
+          </env>
+
+          <!--<cmd>/bin/bash</cmd>-->
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   
