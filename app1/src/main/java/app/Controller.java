@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.xml.bind.JAXBException;
+import java.util.Date;
 
 @RestController
 public class Controller {
 
+    @Autowired
+    private MeldingRepository meldingRepository;
+    
     @Autowired
     private BerichtVerzender berichtVerzender;
 
@@ -28,7 +32,12 @@ public class Controller {
 
         berichtVerzender.verzendBericht(melding);
 
-        return new Greeting(10L, "Hallo!");
+        Melding appMelding = new Melding();
+        appMelding.setTimestamp(new Date(System.currentTimeMillis()));
+        appMelding.setResult("Verzonden bericht: " + melding.getResult());
+        meldingRepository.save(appMelding);
+        
+        return new Greeting(10L, "Bericht verzonden!");
     }
 
     @RequestMapping("/env")

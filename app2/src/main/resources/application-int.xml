@@ -25,14 +25,25 @@
     <property name="brokerURL" value="${amq.brokerurl}"/>
   </bean>
   
-  <int:channel id="BerichtUit"/>
-
   <bean id="bericht" class="org.apache.activemq.command.ActiveMQQueue">
     <constructor-arg value="queue/bericht"/>
   </bean>
 
-  <jms:outbound-channel-adapter connection-factory="connectionFactory"
-                                destination="bericht"
-                                channel="BerichtUit"/>
+  <int:channel id="BerichtIn" />
+  
+  <bean id="cisJmsListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="maxConcurrentConsumers" value="1" />
+    <property name="maxMessagesPerTask" value="1" />
+    <property name="cacheLevelName" value="CACHE_NONE" />
+    <property name="connectionFactory" ref="connectionFactory" />
+    <property name="transactionManager" ref="transactionManager" />
+    <property name="sessionTransacted" value="true" />
+    <property name="transactionTimeout" value="3600" />
+    <property name="receiveTimeout" value="5000" />
+    <property name="destination" ref="bericht" />
+  </bean>
+  
+  <jms:inbound-gateway container="cisJmsListenerContainer"
+                       request-channel="BerichtIn" />
 
 </beans>

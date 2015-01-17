@@ -27,7 +27,7 @@ public class Configurator {
     @PropertySources({
             //De properties file famed-integration.properties is geplaatst in het common component omdat deze ook door de clients worden gebruikt
             @PropertySource(name = "appProperties", value = "classpath:/config/default.properties"),
-            @PropertySource(name = "appProperties", value = "file://${user.home}/quintor/app1.properties",
+            @PropertySource(name = "appProperties", value = "file://${user.home}/quintor/app2.properties",
                     ignoreResourceNotFound = true)
     })
     public static class DevProperties {
@@ -39,12 +39,17 @@ public class Configurator {
 
     @Profile("docker")
     @Configuration
-    @PropertySource(name = "appProperties", value = "file:/etc/quintor-docker/app1.properties")
+    @PropertySource(name = "appProperties", value = "file:/etc/quintor-docker/app2.properties")
     public static class DockerProperties {
         @PostConstruct
         public void init() {
             LOGGER.info("Initialized dockerProperties");
         }
+    }
+
+    @Bean()
+    public BerichtOntvanger berichtOntvanger() {
+        return new BerichtOntvanger();
     }
 
 }
