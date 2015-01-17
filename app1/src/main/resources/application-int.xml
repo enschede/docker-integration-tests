@@ -32,13 +32,12 @@
     </amq:transportConnectors>
   </amq:broker>
 
-  <bean id="integrationToDefactoNotaOvergedragenReplyQueue" class="org.apache.activemq.command.ActiveMQQueue">
-    <constructor-arg value="queue/CisToIntegrationNotaOvergedragenReplyQueue"/>
+  <bean id="bericht" class="org.apache.activemq.command.ActiveMQQueue">
+    <constructor-arg value="queue/bericht"/>
   </bean>
 
-  <jms:outbound-channel-adapter id="cisToIntegrationNotaOvergedragenReplyChannelAdapter"
-                                connection-factory="connectionFactory"
-                                destination="integrationToDefactoNotaOvergedragenReplyQueue"
+  <jms:outbound-channel-adapter connection-factory="connectionFactory"
+                                destination="bericht"
                                 channel="BerichtUit"/>
 
   <int:channel id="BerichtIn" />
@@ -52,8 +51,10 @@
     <property name="sessionTransacted" value="true" />
     <property name="transactionTimeout" value="3600" />
     <property name="receiveTimeout" value="5000" />
-    <property name="destination" ref="integrationToDefactoNotaOvergedragenReplyQueue" />
+    <property name="destination" ref="bericht" />
   </bean>
-  <jms:inbound-gateway id="jmsCisIn" container="cisJmsListenerContainer" request-channel="BerichtIn" />
+  
+  <jms:inbound-gateway container="cisJmsListenerContainer"
+                       request-channel="BerichtIn" />
 
 </beans>
