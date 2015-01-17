@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>nl.marcenschede.dozerdemo</groupId>
+  <artifactId>datadefs</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <dependencies>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.5</version>
+    </dependency>
+
+    <!--Test dependencies-->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>dozer-demo-integration</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jaxb2-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Defacto XSD</id>
+            <goals>
+              <goal>xjc</goal>
+            </goals>
+            <configuration>
+              <schemaDirectory>${basedir}/src/main/resources/xsd</schemaDirectory>
+              <schemaFiles>
+                melding.xsd
+              </schemaFiles>
+              <bindingDirectory>${basedir}/src/main/resources/binding</bindingDirectory>
+              <bindingFiles>datetimebinding.xml</bindingFiles>
+              <outputDirectory>${basedir}/target/generated-sources/jaxb/</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
