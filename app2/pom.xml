@@ -9,7 +9,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.6</java.version>
+    <java.version>1.8</java.version>
   </properties>
 
   <parent>
@@ -128,8 +128,8 @@
         <artifactId>docker-maven-plugin</artifactId>
         <version>0.1.1</version>
         <configuration>
-          <imageName>enschede/app2</imageName>
-          <baseImage>dockerbase/java7</baseImage>
+          <imageName>enschede/app2:${version}</imageName>
+          <baseImage>damm/java8</baseImage>
           <entryPoint>["java", "-jar", "/${project.build.finalName}.jar", "-Dspring.profiles.active=tst"]</entryPoint>
           <!-- copy the service's jar file from target into the root directory of the image -->
           <resources>

@@ -64,7 +64,12 @@
       <artifactId>liquibase-slf4j</artifactId>
       <version>1.2.0</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    
     <dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-client</artifactId>
@@ -131,7 +136,7 @@
         <configuration>
           <imageName>enschede/app1</imageName>
           <baseImage>damm/java8</baseImage>
-          <entryPoint>["java", "-jar", "/${project.build.finalName}.jar", "-Dspring.profiles.active=tst"]</entryPoint>
+          <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
           <!-- copy the service's jar file from target into the root directory of the image -->
           <resources>
             <resource>
