@@ -128,7 +128,7 @@
         <artifactId>docker-maven-plugin</artifactId>
         <version>0.1.1</version>
         <configuration>
-          <imageName>enschede/app2:${version}</imageName>
+          <imageName>enschede/app2</imageName>
           <baseImage>damm/java8</baseImage>
           <entryPoint>["java", "-jar", "/${project.build.finalName}.jar", "-Dspring.profiles.active=tst"]</entryPoint>
           <!-- copy the service's jar file from target into the root directory of the image -->
