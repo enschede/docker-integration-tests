@@ -129,8 +129,8 @@
         <version>0.1.1</version>
         <configuration>
           <imageName>enschede/app2</imageName>
-          <baseImage>damm/java8</baseImage>
-          <entryPoint>["java", "-jar", "/${project.build.finalName}.jar", "-Dspring.profiles.active=tst"]</entryPoint>
+          <baseImage>dockerfile/java:oracle-java8</baseImage>
+          <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
           <!-- copy the service's jar file from target into the root directory of the image -->
           <resources>
             <resource>
