@@ -1,0 +1,29 @@
+web:
+  build: ../dockerUI
+  ports:
+   - "80:80"
+  volumes:
+   - nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+  links:
+   - app1:app1alias
+   - app2:app2alias
+app1:
+  build: ../app1
+  hostname: app1host
+  domainname: quintor.nl
+  volumes:
+   - app1config:/etc/quintor-docker
+  links:
+   - activemq:activemqalias
+app2:
+  build: ../app2
+  hostname: app2host
+  domainname: quintor.nl
+  volumes:
+   - app2config:/etc/quintor-docker
+  links:
+   - activemq:activemqalias
+activemq:
+  image: kdomanski/activemq:5.10.1
+  ports:
+   - "8161:8161"
