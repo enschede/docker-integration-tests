@@ -1,5 +1,6 @@
 package app;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import java.util.Date;
 
 /**
  * Test entity
@@ -20,13 +20,17 @@ public class Melding {
     private Long id;
     @Version
     private Long version;
+
     private String result;
+
+    private String hostprocessed;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
     public Melding() {
     }
-    
+
     public Melding(nl.marcenschede.dozerdemo.melding.v1_0.Melding melding) {
         this.result = melding.getResult().value();
         this.timestamp = new Date(System.currentTimeMillis());
@@ -56,11 +60,20 @@ public class Melding {
         this.timestamp = timestamp;
     }
 
+    public String getHostprocessed() {
+        return hostprocessed;
+    }
+
+    public void setHostprocessed(final String hostprocessed) {
+        this.hostprocessed = hostprocessed;
+    }
+
     @Override
     public String toString() {
         return "Melding{" +
                 "id=" + id +
                 ", result='" + result + '\'' +
+                ", host='" + hostprocessed + '\'' +
                 ", timestamp=" + timestamp +
                 '}';
     }

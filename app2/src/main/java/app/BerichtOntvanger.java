@@ -1,5 +1,8 @@
 package app;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import nl.marcenschede.dozerdemo.utils.marshallUtils;
 import nl.marcenschede.dozerdemo.melding.v1_0.Melding;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,15 @@ public class BerichtOntvanger {
         System.out.println("Bericht nl.marcenschede.dozerdemo.datadefs.melding: " + melding.getResult());
 
         app.Melding appMelding = new app.Melding(melding);
+        appMelding.setHostprocessed(getHostname());
         meldingRepository.save(appMelding);
+    }
+
+    private String getHostname() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            return "Hostname not retrieved";
+        }
     }
 }
