@@ -25,7 +25,6 @@ public class Configurator {
     @Profile("dev")
     @Configuration
     @PropertySources({
-            //De properties file famed-integration.properties is geplaatst in het common component omdat deze ook door de clients worden gebruikt
             @PropertySource(name = "appProperties", value = "classpath:/config/default.properties"),
             @PropertySource(name = "appProperties", value = "file://${user.home}/quintor/app1.properties",
                     ignoreResourceNotFound = true)

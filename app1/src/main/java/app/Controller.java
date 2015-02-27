@@ -28,7 +28,7 @@ public class Controller {
 
     @RequestMapping("/triggerMessage")
     @ResponseBody
-    public Greeting greeting()
+    public Melding greeting()
             throws JAXBException {
 
         nl.marcenschede.dozerdemo.melding.v1_0.Melding melding = new nl.marcenschede.dozerdemo.melding.v1_0.Melding();
@@ -42,7 +42,7 @@ public class Controller {
         appMelding.setHostprocessed(getHostname());
         meldingRepository.save(appMelding);
         
-        return new Greeting(10L, "Bericht verzonden!");
+        return appMelding;
     }
 
     private String getHostname() {
@@ -66,25 +66,6 @@ public class Controller {
     @RequestMapping("/meldingen")
     public Iterable<Melding> getMeldingen(){
         return meldingRepository.findAll();
-    }
-
-    class Greeting {
-
-        private final long id;
-        private final String content;
-
-        public Greeting(long id, String content) {
-            this.id = id;
-            this.content = content;
-        }
-
-        public long getId() {
-            return id;
-        }
-
-        public String getContent() {
-            return content;
-        }
     }
 
 }
