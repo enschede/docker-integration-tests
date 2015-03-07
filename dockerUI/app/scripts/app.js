@@ -24,13 +24,17 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
       .when('/backend1', {
         templateUrl: 'views/backend1.html',
         controller: 'Backend1Ctrl'
+      })
+      .when('/newCreditRequest', {
+        templateUrl: 'views/newcreditrequest.html',
+        controller: 'NewcreditrequestCtrl'
+      })
+      .when('/creditStatus', {
+        templateUrl: 'views/creditstatus.html',
+        controller: 'CreditstatusCtrl'
       })
       .otherwise({
         redirectTo: '/'

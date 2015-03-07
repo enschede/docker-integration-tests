@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name dockerUiApp.controller:AboutCtrl
+ * @name dockerUiApp.controller:CreditstatusCtrl
  * @description
- * # AboutCtrl
+ * # CreditstatusCtrl
  * Controller of the dockerUiApp
  */
 angular.module('dockerUiApp')
-  .controller('AboutCtrl', function ($scope) {
+  .controller('CreditstatusCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

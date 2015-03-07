@@ -26,7 +26,7 @@ angular.module('dockerUiApp')
         success(function (data, status, headers, config) {
           // this callback will be called asynchronously
           // when the response is available
-          $rootScope.alerts.push({message: data.content, type: 'success'});
+          $rootScope.alerts.push({message: data.result, type: 'success'});
           $scope.loadData();
         }).
         error(function (data, status, headers, config) {
