@@ -8,10 +8,31 @@
  * Controller of the dockerUiApp
  */
 angular.module('dockerUiApp')
-  .controller('NewcreditrequestCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('NewcreditrequestCtrl', ['$rootScope', '$scope', 'CreateCreditRequest', function ($rootScope, $scope, creditCreditRequest) {
+
+    $rootScope.alerts = $rootScope.alerts || [];
+
+    $rootScope.alerts = $rootScope.alerts || [];
+    $rootScope.closeAlert = function(alert)
+    {
+      $rootScope.alerts.splice($rootScope.alerts.indexOf(alert), 1);
+    };
+
+
+    $scope.creditRequest = {};
+
+    $scope.sendCreditRequest = function () {
+      creditCreditRequest.sendCreditRequest($scope.creditRequest).
+        success(function (data, status, headers, config) {
+          // this callback will be called asynchronously
+          // when the response is available
+          $rootScope.alerts.push({message: "Credit request ontvangen", type: 'success'});
+        }).
+        error(function (data, status, headers, config) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+          var message = "Status: " + status + ": " + angular.toJson(data, true);
+          $rootScope.alerts.push({message: message, type: 'danger'});
+        });
+    };
+  }]);

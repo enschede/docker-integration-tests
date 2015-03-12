@@ -14,18 +14,18 @@ var backend1Service = angular.module('dockerUiApp')
   });
 
 
-backend1Service.factory('MeldingenBackend1', ['$resource',
+backend1Service.factory('CreditRequestsBackend1', ['$resource',
   function ($resource) {
-    return $resource('/backend1/meldingen/:meldingId', {}, {
-      query: {method: 'GET', params: {meldingId: ''}, isArray: true}
+    return $resource('/backend1/creditRequests/:id', {}, {
+      query: {method: 'GET', params: {id: ''}, isArray: true}
     });
   }]);
 
-backend1Service.factory('SendMessageService', ['$http',
+backend1Service.factory('CreateCreditRequest', ['$http',
   function ($http) {
     return {
-      sendMessage: function () {
-        return $http.get('/backend1/triggerMessage');
+      sendCreditRequest: function (creditRequest) {
+        return $http.post('/backend1/creditRequest', creditRequest);
       }
     };
   }]);
