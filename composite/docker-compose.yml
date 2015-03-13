@@ -1,0 +1,32 @@
+web:
+  build: ../dockerUI
+  ports:
+   - "82:80"
+  links:
+   - app1:app1alias
+app1:
+  image: cbos/app1
+  domainname: quintor.nl
+  environment:
+   db.host: 172.17.42.1
+   db.user: root
+   db.password: root
+   db.database: dockertestfig
+   amq.host: activemqalias
+  links:
+   - activemq:activemqalias
+app2:
+  image: cbos/app2
+  domainname: quintor.nl
+  environment:
+   db.host: 172.17.42.1
+   db.user: root
+   db.password: root
+   db.database: dockertestfig
+   amq.host: activemqalias
+  links:
+   - activemq:activemqalias
+activemq:
+  image: kdomanski/activemq:5.10.1
+  ports:
+   - "8161:8161"
