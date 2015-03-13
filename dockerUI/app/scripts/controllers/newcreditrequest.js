@@ -18,20 +18,19 @@ angular.module('dockerUiApp')
       $rootScope.alerts.splice($rootScope.alerts.indexOf(alert), 1);
     };
 
-
     $scope.creditRequest = {};
 
     $scope.sendCreditRequest = function () {
       creditCreditRequest.sendCreditRequest($scope.creditRequest).
-        success(function (data, status, headers, config) {
+        success(function () {
           // this callback will be called asynchronously
           // when the response is available
-          $rootScope.alerts.push({message: "Credit request ontvangen", type: 'success'});
+          $rootScope.alerts.push({message: 'Credit request ontvangen', type: 'success'});
         }).
-        error(function (data, status, headers, config) {
+        error(function (data, status) {
           // called asynchronously if an error occurs
           // or server returns response with an error status.
-          var message = "Status: " + status + ": " + angular.toJson(data, true);
+          var message = 'Status: ' + status + ': ' + angular.toJson(data, true);
           $rootScope.alerts.push({message: message, type: 'danger'});
         });
     };
