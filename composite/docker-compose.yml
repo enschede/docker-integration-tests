@@ -1,32 +1,40 @@
-web:
+webserver:
   build: ../dockerUI
   ports:
-   - "82:80"
+   - "80:80"
   links:
    - app1:app1alias
+   
 app1:
-  image: cbos/app1
+  image: enschede/app1:70
   domainname: quintor.nl
   environment:
-   db.host: 172.17.42.1
-   db.user: root
-   db.password: root
-   db.database: dockertestfig
+   db.host: mysqlalias
    amq.host: activemqalias
+  env_file:
+   - ./db.env
   links:
    - activemq:activemqalias
-app2:
-  image: cbos/app2
-  domainname: quintor.nl
-  environment:
-   db.host: 172.17.42.1
-   db.user: root
-   db.password: root
-   db.database: dockertestfig
-   amq.host: activemqalias
-  links:
-   - activemq:activemqalias
+  external_links:
+   - mysql56:mysqlalias 
+  
 activemq:
   image: kdomanski/activemq:5.10.1
   ports:
    - "8161:8161"
+   
+app2:
+  image: enschede/app2:2
+  domainname: quintor.nl
+  environment:
+   db.host: mysqlalias
+   amq.host: activemqalias  
+  env_file:
+   - ./db.env
+  links:
+   - activemq:activemqalias
+  external_links:
+  - mysql56:mysqlalias
+   
+
+   
