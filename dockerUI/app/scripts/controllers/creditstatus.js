@@ -20,15 +20,17 @@ angular.module('dockerUiApp')
     
     $scope.startAutoReload = function () {
       // Don't start a new autoReload when that is already done
-      if (angular.isDefined(stop)) return;
+      if (angular.isDefined(stop)) {
+        return;
+      }
       
       stop = $interval(function () {
-        if(counter==100) {
+        if(counter===100) {
           $scope.loadData();
           counter=0;
         }
         counter = counter + 5;
-        $('#reloadprogressbar').css('width', counter+'%').attr('aria-valuenow', counter);
+        angular.element('#reloadprogressbar').css('width', counter+'%').attr('aria-valuenow', counter);
       }, 250);
     };
 
@@ -43,13 +45,13 @@ angular.module('dockerUiApp')
       if (angular.isDefined(stop)) {
         $scope.stopAutoReload();
       } else {
-        counter = 100
+        counter = 100;
         $scope.startAutoReload();
       }
-    }
+    };
 
     $scope.startAutoReload();
-    $('[data-toggle="tooltip"]').tooltip()
+    angular.element('[data-toggle="tooltip"]').tooltip();
     
     $scope.$on('$destroy', function () {
       // Make sure that the interval is destroyed too
