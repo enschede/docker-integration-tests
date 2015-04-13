@@ -9,12 +9,51 @@
  */
 angular.module('dockerUiApp')
 
-  .controller('CreditstatusCtrl', ['$rootScope', '$scope', 'CreditRequestsBackend1', function ($rootScope, $scope, creditRequestsService) {
+  .controller('CreditstatusCtrl', ['$rootScope', '$scope', '$interval', 'CreditRequestsBackend1', function ($rootScope, $scope, $interval, creditRequestsService) {
 
-    $scope.loadData = function(){
+    $scope.loadData = function () {
       $scope.creditRequests = creditRequestsService.query();
     };
 
-    $scope.loadData();
+    var stop;
+    var counter = 100;
+    
+    $scope.startAutoReload = function () {
+      // Don't start a new autoReload when that is already done
+      if (angular.isDefined(stop)) return;
+      
+      stop = $interval(function () {
+        if(counter==100) {
+          $scope.loadData();
+          counter=0;
+        }
+        counter = counter + 5;
+        $('#reloadprogressbar').css('width', counter+'%').attr('aria-valuenow', counter);
+      }, 250);
+    };
+
+    $scope.stopAutoReload = function () {
+      if (angular.isDefined(stop)) {
+        $interval.cancel(stop);
+        stop = undefined;
+      }
+    };
+
+    $scope.toggleAutoReload = function() {
+      if (angular.isDefined(stop)) {
+        $scope.stopAutoReload();
+      } else {
+        counter = 100
+        $scope.startAutoReload();
+      }
+    }
+
+    $scope.startAutoReload();
+    $('[data-toggle="tooltip"]').tooltip()
+    
+    $scope.$on('$destroy', function () {
+      // Make sure that the interval is destroyed too
+      $scope.stopAutoReload();
+    });
   }]);
 
